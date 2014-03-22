@@ -1,0 +1,32 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
+VAGRANTFILE_API_VERSION = "2"
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+  config.vm.box = "raring-ringtail"
+  config.vm.box_url = "http://goo.gl/Y4aRr"
+  # config.vm.box = "raring-minimal32"
+  # config.vm.box_url = "http://cloud-images.ubuntu.com/vagrant/raring/current/raring-server-cloudimg-i386-vagrant-disk1.box"
+  config.ssh.forward_agent = true
+
+  config.vm.network :private_network, ip: "192.168.56.201"
+  config.vm.network :forwarded_port, guest: 80, host: 8888, auto_correct: true # web
+  # config.vm.network :forwarded_port, guest: 3306, host: 8889, auto_correct: true # mysql
+  config.vm.hostname = "raring-scala"
+  config.vm.synced_folder "../project", "/home/project", {:mount_options => ['dmode=777','fmode=777']}
+
+  config.vm.provider :virtualbox do |v|
+    v.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+    v.customize ["modifyvm", :id, "--memory", "1024"]
+  end
+
+  config.vm.provision "shell", inline: "echo Provisioning start ..."
+  config.vm.provision "shell", path: "provision/scala.sh"
+  config.vm.provision "shell", path: "provision/android-sdk.sh"
+  # config.vm.provision "shell", path: "provision/android-ndk.sh"
+  config.vm.provision "shell", path: "provision/scala-android.sh"
+  config.vm.provision "shell", inline: "echo Installation complete"
+
+end
