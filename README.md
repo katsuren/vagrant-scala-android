@@ -7,6 +7,7 @@ This Vagrantfile uses sync-folder, so you can edit the projects from host.
 Specs
 ======
 
+* Ubuntu 13.04 64bit
 * Java 1.7.0_51
 * Scala 2.10.3
 * SBT 0.13.1
@@ -15,6 +16,7 @@ Specs
 * giter8
 
 Mem 1024
+
 Private network 192.168.56.201
 
 How to
