@@ -8,6 +8,7 @@ apt-get install -y python-software-properties wget curl unzip git
 if [ ! `which java` ]; then
   add-apt-repository ppa:webupd8team/java
   apt-get update
+  apt-get install -y ruby-dev
   apt-get install -y openjdk-6-jre-headless openjdk-7-jre-headless openjdk-7-jdk libjansi-java ia32-libs
 fi
 
